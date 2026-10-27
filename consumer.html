@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FarmLink Consumer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="consumer">
+    <header class="topbar">
+      <a class="brand" href="consumer.html">
+        <span data-i18n="network">10 km local farm network</span>
+        <strong>FarmLink Consumer</strong>
+      </a>
+      <div class="top-actions">
+        <div class="user-chip" id="userChip" style="display: none;">
+          <span class="user-chip-avatar">🛒</span>
+          <div class="user-chip-info">
+            <span class="user-chip-name" id="userChipName">Consumer</span>
+            <span class="user-chip-email" id="userChipEmail">consumer@example.com</span>
+          </div>
+        </div>
+        <label class="language-choice">
+          <span data-i18n="language">Language</span>
+          <select class="languageSelect" aria-label="Language">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="mr">मराठी</option>
+          </select>
+        </label>
+        <span class="site-badge" data-i18n="consumerSite">Consumer site</span>
+        <button class="logout-button simulate-day-btn" type="button" id="advanceDayBtn" title="Simulate advancing to next day to test automatic daily deletion from home page">📅 <span data-i18n="nextDay">Next Day</span></button>
+        <button class="logout-button" type="button" id="switchUserBtn" data-i18n="switchUser">Switch account</button>
+        <button class="logout-button" type="button" id="resetDataBtn" data-i18n="resetData">Reset data</button>
+        <button class="logout-button" type="button" id="logoutBtn" data-i18n="logout">Logout</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="login-screen">
+        <div class="login-panel">
+          <div class="auth-tabs" role="tablist">
+            <button type="button" class="auth-tab-btn active" id="tabSignIn" data-i18n="signInTab">Sign In</button>
+            <button type="button" class="auth-tab-btn" id="tabSignUp" data-i18n="signUpTab">Create Account</button>
+          </div>
+
+          <div id="authAlert" class="auth-alert" style="display: none;"></div>
+
+          <form class="auth-form" id="loginForm">
+            <p class="eyebrow" data-i18n="consumerLogin">Consumer login</p>
+            <h1 data-i18n="loginTitle">Sign in to FarmLink</h1>
+            <p data-i18n="consumerLoginText">Login to search nearby farmers, place orders, negotiate prices, and make payments.</p>
+            <label>
+              <span data-i18n="emailAddress">Email address</span>
+              <input name="email" id="loginEmail" type="email" required placeholder="consumer@example.com" autocomplete="email" />
+            </label>
+            <label>
+              <span data-i18n="password">Password</span>
+              <div class="password-wrapper">
+                <input name="password" id="loginPassword" required type="password" placeholder="••••••••" autocomplete="current-password" />
+                <button type="button" class="toggle-password" data-target="loginPassword" title="Show password">👁️</button>
+              </div>
+            </label>
+            <button class="primary full" type="submit" data-i18n="login">Sign In</button>
+            <p class="auth-switch-hint"><span>New consumer?</span> <button type="button" class="link-btn" id="linkToSignUp">Create an account</button></p>
+          </form>
+
+          <form class="auth-form" id="signupForm" style="display: none;">
+            <p class="eyebrow" data-i18n="consumerSignUp">Consumer Registration</p>
+            <h1 data-i18n="createConsumerAccount">Join as a Consumer</h1>
+            <p data-i18n="consumerSignupText">Create an account to buy farm-fresh produce directly from local farmers.</p>
+            <label>
+              <span data-i18n="consumerName">Your Full Name</span>
+              <input name="name" required placeholder="e.g. Rahul Sharma" />
+            </label>
+            <label>
+              <span data-i18n="emailAddress">Email address</span>
+              <input name="email" type="email" required placeholder="consumer@example.com" autocomplete="email" />
+            </label>
+            <label>
+              <span data-i18n="password">Password</span>
+              <div class="password-wrapper">
+                <input name="password" id="signupPassword" required type="password" minlength="4" placeholder="At least 4 characters" autocomplete="new-password" />
+                <button type="button" class="toggle-password" data-target="signupPassword" title="Show password">👁️</button>
+              </div>
+            </label>
+            <label>
+              <span data-i18n="deliveryArea">Delivery Area</span>
+              <select name="area" class="signupAreaSelect"></select>
+            </label>
+            <label>
+              <span data-i18n="phoneNumber">Phone number</span>
+              <input name="phone" type="tel" placeholder="+91 94220 11223" />
+            </label>
+            <button class="primary full" type="submit" data-i18n="registerConsumerBtn">Create Consumer Account</button>
+            <p class="auth-switch-hint"><span>Already have an account?</span> <button type="button" class="link-btn" id="linkToSignIn">Sign in here</button></p>
+          </form>
+        </div>
+      </section>
+
+      <div class="app-shell">
+      <section class="hero consumer-hero">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="consumerEyebrow">Fresh produce near you</p>
+          <h1 data-i18n="consumerTitle">Search, negotiate, order, and pay local farmers.</h1>
+          <p data-i18n="consumerIntro">Find farm products within 10 km, compare prices, send offers, place orders, and complete online payments from one screen.</p>
+          <div class="hero-actions">
+            <a class="primary" href="#market" data-i18n="browseMarket">Browse market</a>
+            <a class="secondary" href="#payment" data-i18n="paymentTab">Payment tab</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="location-band">
+        <div>
+          <h2 data-i18n="yourLocation">Your location</h2>
+          <p data-i18n="radiusText">Showing farmers and products inside a 10 km radius.</p>
+        </div>
+        <label>
+          <span data-i18n="area">Area</span>
+          <select id="areaSelect"></select>
+        </label>
+        <div class="radius-meter"><span>0 km</span><div><span></span></div><strong>10 km</strong></div>
+      </section>
+
+      <section id="market" class="consumer-grid">
+        <aside class="panel filters">
+          <h2 data-i18n="findProducts">Find Products</h2>
+          <label>
+            <span data-i18n="search">Search</span>
+            <input id="searchInput" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Tomato, rice, milk..." />
+          </label>
+          <label>
+            <span data-i18n="category">Category</span>
+            <select id="categorySelect"></select>
+          </label>
+          <label>
+            <span data-i18n="maxDistance">Maximum distance</span>
+            <input id="distanceRange" type="range" min="1" max="10" value="10" />
+            <span id="distanceLabel">10 km</span>
+          </label>
+        </aside>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow" data-i18n="consumerSite">Consumer site</p>
+              <h2 data-i18n="nearbyProducts">Nearby Products</h2>
+            </div>
+            <button class="icon-button" id="refreshBtn" type="button" title="Refresh">R</button>
+          </div>
+          <div id="productList" class="product-list"></div>
+        </section>
+      </section>
+
+      <section class="dashboard-grid">
+        <section class="panel" id="orders">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow" data-i18n="orders">Orders</p>
+              <h2 data-i18n="myOrders">My Orders</h2>
+            </div>
+            <div class="order-view-tabs" role="tablist">
+              <button type="button" class="order-tab-btn active" id="tabTodayOrders" data-i18n="todayOrdersTab">Today's Orders</button>
+              <button type="button" class="order-tab-btn" id="tabHistoryOrders" data-i18n="orderHistoryTab">Order History (<span id="historyOrderCount">0</span>)</button>
+            </div>
+          </div>
+
+          <div id="todayOrdersView">
+            <div id="orderList" class="order-list"></div>
+          </div>
+
+          <div id="historyOrdersView" style="display: none;">
+            <div class="history-controls">
+              <label class="history-filter-label">
+                <span data-i18n="filterByStatus">Filter Status</span>
+                <select id="historyStatusFilter">
+                  <option value="all" data-i18n="allStatuses">All Statuses</option>
+                  <option value="paid" data-i18n="paid">Paid</option>
+                  <option value="accepted" data-i18n="accepted">Accepted</option>
+                  <option value="placed" data-i18n="placed">Placed</option>
+                  <option value="rejected" data-i18n="rejected">Rejected</option>
+                </select>
+              </label>
+              <div class="history-summary-chip">
+                <span data-i18n="totalHistorical">Previous Orders Total:</span>
+                <strong id="historyTotalAmount">Rs 0</strong>
+              </div>
+            </div>
+            <div id="historyOrderList" class="order-list"></div>
+          </div>
+        </section>
+
+        <section class="panel" id="negotiations">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow" data-i18n="negotiation">Negotiation</p>
+              <h2 data-i18n="negotiationOffers">Negotiation Offers</h2>
+            </div>
+          </div>
+          <div id="negotiationList" class="message-list"></div>
+        </section>
+
+        <section class="panel" id="payment">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow" data-i18n="secureCheckout">Secure checkout</p>
+              <h2 data-i18n="onlinePayment">Online Payment</h2>
+            </div>
+            <span class="badge" data-i18n="demoGateway">Demo gateway</span>
+          </div>
+          <div class="payment-tabs" role="tablist">
+            <button class="active" type="button" data-payment-method="upi" data-i18n="upi">UPI</button>
+            <button type="button" data-payment-method="card" data-i18n="card">Card</button>
+            <button type="button" data-payment-method="cod" data-i18n="cod">Cash</button>
+          </div>
+          <form id="paymentForm" class="payment-form">
+            <label>
+              <span data-i18n="payForOrder">Pay for order</span>
+              <select id="paymentOrderSelect"></select>
+            </label>
+            <label class="payment-field" data-method-field="upi">
+              <span data-i18n="upiId">UPI ID</span>
+              <input id="upiInput" placeholder="name@bank" />
+            </label>
+            <label class="payment-field hidden" data-method-field="card">
+              <span data-i18n="cardNumber">Card number</span>
+              <input id="cardInput" inputmode="numeric" placeholder="4242 4242 4242 4242" />
+            </label>
+            <label class="payment-field hidden" data-method-field="cod">
+              <span data-i18n="cashNote">Cash note</span>
+              <input id="cashInput" data-i18n-placeholder="cashPlaceholder" placeholder="Pay when product arrives" />
+            </label>
+            <div class="payment-summary">
+              <span data-i18n="amount">Amount</span>
+              <strong id="paymentAmount">Rs 0</strong>
+            </div>
+            <button class="primary full" type="submit" data-i18n="payNow">Pay now</button>
+          </form>
+        </section>
+      </section>
+      </div>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="shared.js"></script>
+  </body>
+</html>

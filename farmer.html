@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FarmLink Farmer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="farmer">
+    <header class="topbar">
+      <a class="brand" href="farmer.html">
+        <span data-i18n="network">10 km local farm network</span>
+        <strong>FarmLink Farmer</strong>
+      </a>
+      <div class="top-actions">
+        <div class="user-chip" id="userChip" style="display: none;">
+          <span class="user-chip-avatar">👨‍🌾</span>
+          <div class="user-chip-info">
+            <span class="user-chip-name" id="userChipName">Farmer</span>
+            <span class="user-chip-email" id="userChipEmail">farmer@example.com</span>
+          </div>
+        </div>
+        <label class="language-choice">
+          <span data-i18n="language">Language</span>
+          <select class="languageSelect" aria-label="Language">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="mr">मराठी</option>
+          </select>
+        </label>
+        <span class="site-badge" data-i18n="farmerSite">Farmer site</span>
+        <button class="logout-button simulate-day-btn" type="button" id="advanceDayBtn" title="Simulate advancing to next day to test automatic daily deletion from home page">📅 <span data-i18n="nextDay">Next Day</span></button>
+        <button class="logout-button" type="button" id="switchUserBtn" data-i18n="switchUser">Switch account</button>
+        <button class="logout-button" type="button" id="resetDataBtn" data-i18n="resetData">Reset data</button>
+        <button class="logout-button" type="button" id="logoutBtn" data-i18n="logout">Logout</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="login-screen">
+        <div class="login-panel">
+          <div class="auth-tabs" role="tablist">
+            <button type="button" class="auth-tab-btn active" id="tabSignIn" data-i18n="signInTab">Sign In</button>
+            <button type="button" class="auth-tab-btn" id="tabSignUp" data-i18n="signUpTab">Create Account</button>
+          </div>
+
+          <div id="authAlert" class="auth-alert" style="display: none;"></div>
+
+          <form class="auth-form" id="loginForm">
+            <p class="eyebrow" data-i18n="farmerLogin">Farmer login</p>
+            <h1 data-i18n="loginTitle">Sign in to FarmLink</h1>
+            <p data-i18n="farmerLoginText">Login to list products, accept orders, manage stock, and receive online payments.</p>
+            <label>
+              <span data-i18n="emailAddress">Email address</span>
+              <input name="email" id="loginEmail" type="email" required placeholder="farmer@example.com" autocomplete="email" />
+            </label>
+            <label>
+              <span data-i18n="password">Password</span>
+              <div class="password-wrapper">
+                <input name="password" id="loginPassword" required type="password" placeholder="••••••••" autocomplete="current-password" />
+                <button type="button" class="toggle-password" data-target="loginPassword" title="Show password">👁️</button>
+              </div>
+            </label>
+            <button class="primary full" type="submit" data-i18n="login">Sign In</button>
+            <p class="auth-switch-hint"><span>New farmer?</span> <button type="button" class="link-btn" id="linkToSignUp">Create an account</button></p>
+          </form>
+
+          <form class="auth-form" id="signupForm" style="display: none;">
+            <p class="eyebrow" data-i18n="farmerSignUp">Farmer Registration</p>
+            <h1 data-i18n="createFarmerAccount">Join as a Farmer</h1>
+            <p data-i18n="farmerSignupText">Create an account to sell fresh produce directly to consumers in your 10 km area.</p>
+            <label>
+              <span data-i18n="farmerName">Your Name / Farm Name</span>
+              <input name="name" required placeholder="e.g. Patil Organic Farm" />
+            </label>
+            <label>
+              <span data-i18n="emailAddress">Email address</span>
+              <input name="email" type="email" required placeholder="farmer@example.com" autocomplete="email" />
+            </label>
+            <label>
+              <span data-i18n="password">Password</span>
+              <div class="password-wrapper">
+                <input name="password" id="signupPassword" required type="password" minlength="4" placeholder="At least 4 characters" autocomplete="new-password" />
+                <button type="button" class="toggle-password" data-target="signupPassword" title="Show password">👁️</button>
+              </div>
+            </label>
+            <label>
+              <span data-i18n="farmArea">Farm Area</span>
+              <select name="area" class="signupAreaSelect"></select>
+            </label>
+            <label>
+              <span data-i18n="phoneNumber">Phone number</span>
+              <input name="phone" type="tel" placeholder="+91 98220 12345" />
+            </label>
+            <button class="primary full" type="submit" data-i18n="registerFarmerBtn">Create Farmer Account</button>
+            <p class="auth-switch-hint"><span>Already registered?</span> <button type="button" class="link-btn" id="linkToSignIn">Sign in here</button></p>
+          </form>
+        </div>
+      </section>
+
+      <div class="app-shell">
+      <section class="hero farmer-hero">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="farmerEyebrow">Sell directly nearby</p>
+          <h1 data-i18n="farmerTitle">List produce, accept orders, and receive online payments.</h1>
+          <p data-i18n="farmerIntro">Manage products, prices, stock, orders, negotiations, and payment status for consumers within 10 km.</p>
+          <div class="hero-actions">
+            <a class="primary" href="#listing" data-i18n="addProduct">Add Product</a>
+            <a class="secondary" href="#payments" data-i18n="paymentTab">Payment tab</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="location-band">
+        <div>
+          <h2 data-i18n="farmLocation">Farm location</h2>
+          <p data-i18n="farmerRadiusText">Receive orders from consumers inside a 10 km radius.</p>
+        </div>
+        <label>
+          <span data-i18n="area">Area</span>
+          <select id="areaSelect"></select>
+        </label>
+        <div class="radius-meter"><span>0 km</span><div><span></span></div><strong>10 km</strong></div>
+      </section>
+
+      <section class="farmer-grid">
+        <section class="panel" id="listing">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow" data-i18n="farmerSite">Farmer site</p>
+              <h2 data-i18n="addProduct">Add Product</h2>
+            </div>
+          </div>
+          <form id="productForm" class="form-grid">
+            <label>
+              <span data-i18n="productName">Product name</span>
+              <input name="name" required data-i18n-placeholder="productPlaceholder" placeholder="Fresh spinach" />
+            </label>
+            <label>
+              <span data-i18n="productPhoto">Product photo</span>
+              <input name="photo" type="file" accept="image/*" />
+            </label>
+            <label>
+              <span data-i18n="category">Category</span>
+              <select name="category"></select>
+            </label>
+            <label>
+              <span data-i18n="pricePerUnit">Price per unit</span>
+              <input name="price" required type="number" min="1" placeholder="30" />
+            </label>
+            <label>
+              <span data-i18n="unit">Unit</span>
+              <select name="unit"></select>
+            </label>
+            <label>
+              <span data-i18n="stock">Stock</span>
+              <input name="stock" required type="number" min="1" placeholder="50" />
+            </label>
+            <label>
+              <span data-i18n="distanceFromBuyer">Distance from buyer</span>
+              <input name="distance" required type="number" min="1" max="10" value="4" />
+            </label>
+            <button class="primary full" type="submit" data-i18n="listProduct">List product</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow" data-i18n="inventory">Inventory</p>
+              <h2 data-i18n="myProducts">My Products</h2>
+            </div>
+          </div>
+          <div id="farmerProductList" class="product-list"></div>
+        </section>
+      </section>
+
+      <section class="dashboard-grid">
+        <section class="panel" id="orders">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow" data-i18n="orders">Orders</p>
+              <h2 data-i18n="incomingOrders">Incoming Orders</h2>
+            </div>
+            <div class="order-view-tabs" role="tablist">
+              <button type="button" class="order-tab-btn active" id="tabTodayOrders" data-i18n="todayOrdersTab">Today's Orders</button>
+              <button type="button" class="order-tab-btn" id="tabHistoryOrders" data-i18n="orderHistoryTab">Order History (<span id="historyOrderCount">0</span>)</button>
+            </div>
+          </div>
+
+          <div id="todayOrdersView">
+            <div id="orderList" class="order-list"></div>
+          </div>
+
+          <div id="historyOrdersView" style="display: none;">
+            <div class="history-controls">
+              <label class="history-filter-label">
+                <span data-i18n="filterByStatus">Filter Status</span>
+                <select id="historyStatusFilter">
+                  <option value="all" data-i18n="allStatuses">All Statuses</option>
+                  <option value="paid" data-i18n="paid">Paid</option>
+                  <option value="accepted" data-i18n="accepted">Accepted</option>
+                  <option value="placed" data-i18n="placed">Placed</option>
+                  <option value="rejected" data-i18n="rejected">Rejected</option>
+                </select>
+              </label>
+              <div class="history-summary-chip">
+                <span data-i18n="totalHistorical">Previous Orders Total:</span>
+                <strong id="historyTotalAmount">Rs 0</strong>
+              </div>
+            </div>
+            <div id="historyOrderList" class="order-list"></div>
+          </div>
+        </section>
+
+        <section class="panel" id="negotiations">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow" data-i18n="negotiation">Negotiation</p>
+              <h2 data-i18n="negotiationOffers">Negotiation Offers</h2>
+            </div>
+          </div>
+          <div id="negotiationList" class="message-list"></div>
+        </section>
+
+        <section class="panel" id="payments">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow" data-i18n="paymentTab">Payment tab</p>
+              <h2 data-i18n="paymentDashboard">Payment Dashboard</h2>
+            </div>
+            <span class="badge" data-i18n="bankLinked">Bank linked</span>
+          </div>
+          <div class="payment-kpis">
+            <div>
+              <span data-i18n="receivedToday">Received today</span>
+              <strong id="receivedToday">Rs 0</strong>
+            </div>
+            <div>
+              <span data-i18n="pendingAmount">Pending</span>
+              <strong id="pendingAmount">Rs 0</strong>
+            </div>
+          </div>
+          <form id="settlementForm" class="payment-form">
+            <label>
+              <span data-i18n="settlementAccount">Settlement account</span>
+              <input id="settlementAccountInput" name="settlementAccount" required placeholder="Bank - Branch - A/C" />
+            </label>
+            <label>
+              <span data-i18n="upiId">UPI ID</span>
+              <input id="upiIdInput" name="upiId" required placeholder="farmer@upi" />
+            </label>
+            <button class="primary full" type="submit" data-i18n="requestSettlement">Save & Request settlement</button>
+          </form>
+        </section>
+      </section>
+      </div>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="shared.js"></script>
+  </body>
+</html>
